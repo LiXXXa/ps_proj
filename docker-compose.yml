@@ -1,0 +1,10 @@
+services:
+  backend_meetup_like:
+    build:
+      context: .
+      dockerfile: dockerfile
+    ports:
+      - '3033:3033'
+    environment:
+      - PORT=3033
+
