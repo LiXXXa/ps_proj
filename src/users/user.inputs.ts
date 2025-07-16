@@ -55,7 +55,6 @@ export class UserInput {
 
   @Field(() => String)
   @IsString()
-  @HideField()
   @IsNotEmpty()
   password?: string;
 }
