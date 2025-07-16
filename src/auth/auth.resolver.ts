@@ -6,7 +6,7 @@ import { CreateUserInput, LoginUserInput } from '../users/user.inputs';
 @ObjectType()
 class AuthToken {
   @Field(() => String)
-  accessToken: String;
+  accessToken: string;
 
   @Field(() => String)
   refreshToken: string;

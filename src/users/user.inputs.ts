@@ -9,19 +9,19 @@ export class CreateUserInput {
   @Field(() => String)
   @IsNotEmpty()
   @IsString()
-  name: String;
+  name: string;
 
   @Field(() => String)
   @IsString()
   @IsNotEmpty()
   @IsEmail()
-  email: String;
+  email: string;
 
   @Field(() => String)
   @IsString()
   @IsNotEmpty()
   @MinLength(8)
-  password: String;
+  password: string;
 }
 
 @InputType()
@@ -29,29 +29,29 @@ export class GetUserByEmailInput {
   @Field(() => String)
   @IsEmail()
   @IsNotEmpty()
-  email: String;
+  email: string;
 }
 
 @InputType()
 export class UserInput {
   @Field(() => String)
   @IsNotEmpty()
-  name?: String;
+  name?: string;
 
   @Field(() => String)
   @IsString()
   @IsNotEmpty()
   @IsEmail()
-  email?: String;
+  email?: string;
 
   @Field(() => String)
   @IsString()
-  uuid?: String;
+  uuid?: string;
 
   @Field(() => String)
   @IsNotEmpty()
   @IsString()
-  _id?: String;
+  _id?: string;
 
   @Field(() => String)
   @IsString()
@@ -67,7 +67,7 @@ export class LoginUserInput {
   @Field(() => String)
   @IsString()
   @IsNotEmpty()
-  email: String;
+  email: string;
 
   @Field(() => String)
   @IsString()

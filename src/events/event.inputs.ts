@@ -6,38 +6,38 @@ export class EventInput {
   @Field(() => String)
   @IsNotEmpty()
   @IsString()
-  _id: String;
+  _id: string;
 
   @Field(() => String)
   @IsString()
-  uuid?: String;
+  uuid?: string;
 
   @IsString()
   @Field(() => String)
-  title?: String;
+  title?: string;
 
   @IsString()
   @Field(() => String)
-  description?: String;
+  description?: string;
 
   @IsString()
   @Field(() => Date)
-  date?: String;
+  date?: string;
 
   @IsString()
   @Field(() => String)
-  organizer: String;
+  organizer: string;
 }
 
 @InputType()
 export class CreateEventInput {
   @IsString()
   @Field(() => String)
-  title?: String;
+  title?: string;
 
   @IsString()
   @Field(() => String)
-  description?: String;
+  description?: string;
 
   @IsDate()
   @Field(() => Date)
@@ -49,34 +49,34 @@ export class SearchEventsInput {
   @Field(() => String, { nullable: true })
   @IsString()
   @IsOptional()
-  uuid?: String;
+  uuid?: string;
 
 
   @Field(() => String, { nullable: true })
   @IsString()
   @IsOptional()
-  _id?: String;
+  _id?: string;
 
   @Field(() => String, { nullable: true })
   @IsString()
   @IsOptional()
-  title?: String;
+  title?: string;
 
   @Field(() => String, { nullable: true })
   @IsString()
   @IsOptional()
-  description?: String;
+  description?: string;
 
 
   @Field(() => Date, { nullable: true })
   @IsString()
   @IsOptional()
   @IsDateString()
-  date?: String;
+  date?: string;
 
 
   @Field(() => String, { nullable: true })
   @IsString()
   @IsOptional()
-  organizer?: String;
+  organizer?: string;
 }

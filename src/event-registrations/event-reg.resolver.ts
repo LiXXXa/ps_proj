@@ -19,7 +19,7 @@ export class EventRegResolver {
   @UseGuards(JwtAuthGuard)
   async registerForEvent(
     @Args('payload', { type: () => RegUserOnEventInput }) payload: RegUserOnEventInput,
-    @CurrentUser() currentUser: {_id: String, uuid: String}
+    @CurrentUser() currentUser: {_id: string, uuid: string}
   ) {
     return this.eventRegService.register(payload, currentUser._id);
   }
@@ -28,7 +28,7 @@ export class EventRegResolver {
   @UseGuards(JwtAuthGuard)
   async cancelRegistration(
     @Args('payload', { type: () => CancelRegInput }) payload: CancelRegInput,
-    @CurrentUser() currentUser: {_id: String, uuid: String}) {
+    @CurrentUser() currentUser: {_id: string, uuid: string}) {
     return this.eventRegService.cancelRegistration(payload, currentUser._id);
 }
 }

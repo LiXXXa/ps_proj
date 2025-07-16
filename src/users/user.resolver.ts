@@ -22,14 +22,14 @@ export class UserResolver {
 
   @Query(() => User, {name: 'me'})
   @UseGuards(JwtAuthGuard)
-  async me(@CurrentUser()  currentUser: {sub: String, email: String, uuid: String}) {
+  async me(@CurrentUser()  currentUser: {sub: string, email: string, uuid: string}) {
     return this.userService.findOne({uuid: currentUser.uuid});
   }
 
   @Query(() => [Event], { name: 'myOrganizedEvents' })
   @UseGuards(JwtAuthGuard)
   async myOrganizedEvents(
-    @CurrentUser() currentUser: {_id: String}
+    @CurrentUser() currentUser: {_id: string}
   ) {
     return this.eventService.events({
     organizer:currentUser._id });

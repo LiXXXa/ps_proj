@@ -21,7 +21,7 @@ export class UserService {
     return await this.userModel.findOne(param, 'uuid name email').exec();
   }
 
-  async updateRefreshToken(uuid: String, refreshToken: string) {
+  async updateRefreshToken(uuid: string, refreshToken: string) {
     const salt = await bcrypt.genSalt(10);
     const hashedRefreshToken = await bcrypt.hash(refreshToken, salt);
     await this.userModel.updateOne(

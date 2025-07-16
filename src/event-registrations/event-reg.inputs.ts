@@ -12,12 +12,12 @@ export enum RegistrationStatus {
 export class RegUserOnEventInput {
   @Field(() => String, {nullable: true})
   @IsOptional()
-  user: String;
+  user: string;
 
   @Field(() => String, {nullable: true})
   @IsString()
   @IsNotEmpty()
-  event: String;
+  event: string;
 
   @Field(() => String, {nullable: true})
   @IsString()
@@ -33,12 +33,12 @@ export class RegUserOnEventInput {
   @IsString()
   @IsDateString()
   @IsOptional()
-  cancellationDate?:String;
+  cancellationDate?:string;
 
   @Field(() => String, {nullable: true})
   @IsString()
   @IsOptional()
-  cancellationReason?:String;
+  cancellationReason?:string;
 
   @Field(() => Boolean, {nullable: true})
   @IsOptional()
@@ -52,26 +52,26 @@ export class RegUserOnEventInput {
   @Field(() => String, {nullable: true})
   @IsString()
   @IsOptional()
-  notes?:String;
+  notes?:string;
 }
 
 @InputType()
 export class CancelRegInput {
   @Field(() => String)
   @IsString()
-  event: String;
+  event: string;
 
   @Field(() => String, {nullable: true})
   @IsString()
-  cancellationDate?:String;
+  cancellationDate?:string;
 
   @Field(() => String, {nullable: true})
   @IsString()
-  cancellationReason?:String;
+  cancellationReason?:string;
 
   @Field(() => String, {nullable: true})
   @IsString()
-  user: String;
+  user: string;
 
 
   @Field(() => String, {nullable: true})
@@ -81,7 +81,7 @@ export class CancelRegInput {
   @Field(() => String, {nullable: true})
   @IsString()
   @IsOptional()
-  notes?:String;
+  notes?:string;
 
 }
 
@@ -90,12 +90,12 @@ export class GetMyRegInput {
   @IsString()
   @Field(() => String)
   @IsOptional()
-  user: String;
+  user: string;
 
   @Field(() => String, {nullable: true})
   @IsString()
   @IsOptional()
-  event?: String;
+  event?: string;
 
   @Field(() => String, {nullable: true})
   @IsString()
@@ -111,12 +111,12 @@ export class GetMyRegInput {
   @IsString()
   @IsDateString()
   @IsOptional()
-  cancellationDate?:String;
+  cancellationDate?:string;
 
   @Field(() => String, {nullable: true})
   @IsString()
   @IsOptional()
-  cancellationReason?:String;
+  cancellationReason?:string;
 
   @Field(() => Boolean, {nullable: true})
   @IsOptional()
@@ -130,5 +130,5 @@ export class GetMyRegInput {
   @Field(() => String, {nullable: true})
   @IsString()
   @IsOptional()
-  notes?:String;
+  notes?:string;
 }

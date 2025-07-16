@@ -24,19 +24,19 @@ export class EventRegistration extends Document {
 
   @Field(() => String)
   @Prop({ type: String, enum: RegistrationStatus, default: 'PENDING', nullable: true })
-  status: String;
+  status: string;
 
   @Field(() => String, { nullable: true })
   @Prop({ type: String, nullable: true })
-  registrationDate: String;
+  registrationDate: string;
 
   @Field(() => String, { nullable: true })
   @Prop({ type: String, required: false, nullable: true })
-  cancellationDate?: String;
+  cancellationDate?: string;
 
   @Field(() => String, { nullable: true })
   @Prop({ type: String, required: false, nullable: true })
-  cancellationReason?: String;
+  cancellationReason?: string;
 
   @Field(() => Boolean, { nullable: true })
   @Prop({ type: Boolean, default: false, required: false, nullable: true })
@@ -44,11 +44,11 @@ export class EventRegistration extends Document {
 
   @Field(() => String, { nullable: true })
   @Prop({ type: String, required: false, nullable: true })
-  attendanceDate?: String;
+  attendanceDate?: string;
 
   @Field(() => String, { nullable: true })
   @Prop({ type: String, required: false, nullable: true })
-  notes?: String;
+  notes?: string;
 }
 
 export type eventRegistrationDocument = EventRegistration & Document;

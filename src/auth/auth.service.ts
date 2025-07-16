@@ -19,9 +19,9 @@ export type Tokens = {
 
 @Injectable()
 export class AuthService {
-  private readonly JWT_SECRET: String;
-  private readonly JWT_ACCESS_TKN: String;
-  private readonly JWT_REFRESH_TKN: String;
+  private readonly JWT_SECRET: string;
+  private readonly JWT_ACCESS_TKN: string;
+  private readonly JWT_REFRESH_TKN: string;
   private readonly logger = new Logger(AuthService.name);
 
   constructor(

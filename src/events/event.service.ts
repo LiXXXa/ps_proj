@@ -12,7 +12,7 @@ export class EventService {
     @InjectModel(Event.name) private eventModel: Model<EventDocument>,
   ) {}
 
-  async createEvent(param: CreateEventInput, organizerId: String) {
+  async createEvent(param: CreateEventInput, organizerId: string) {
     const newUuid = uuidv4();
     const createdEvent = new this.eventModel({
       ...param,

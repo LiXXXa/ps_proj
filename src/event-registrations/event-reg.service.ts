@@ -23,7 +23,7 @@ export class EventRegService {
     @InjectModel(Event.name) private eventModel: Model<EventDocument>,
   ) {}
 
-  async register(regUserOnEventInput: RegUserOnEventInput, userId: String) {
+  async register(regUserOnEventInput: RegUserOnEventInput, userId: string) {
     const { event: eventId } = regUserOnEventInput;
 
     const eventToRegister = await this.eventModel.findById(eventId).exec();
@@ -61,7 +61,7 @@ export class EventRegService {
     return savedRegistration;
   }
 
-  async cancelRegistration(cancelRegInput: CancelRegInput, userId: String) {
+  async cancelRegistration(cancelRegInput: CancelRegInput, userId: string) {
     const { event: eventId, cancellationReason } = cancelRegInput;
     const updatedRegistration = await this.eventRegistrationModel.findOneAndUpdate(
       {

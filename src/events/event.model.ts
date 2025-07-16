@@ -9,15 +9,15 @@ export class Event extends Document {
 
   @Field(() => String, { nullable: true })
   @Prop({required: true, unique: true})
-  uuid?: String;
+  uuid?: string;
 
   @Field(() => String, { nullable: true })
   @Prop({required: true})
-  title?: String;
+  title?: string;
 
   @Field(() => String, { nullable: true })
   @Prop({required: true})
-  description?: String;
+  description?: string;
 
   @Field(() => Date, { nullable: true })
   @Prop({required: true})

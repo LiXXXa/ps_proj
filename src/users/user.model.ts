@@ -16,16 +16,16 @@ export class User  {
     default: uuidv4,
     required: true
   })
-  uuid: String;
+  uuid: string;
 
 
   @Field(() => String, {nullable: true })
   @Prop()
-  name?: String;
+  name?: string;
 
   @Field(() => String, { nullable: true })
   @Prop({unique: true })
-  email: String;
+  email: string;
 
 
   @Field(() => String, { nullable: true })
