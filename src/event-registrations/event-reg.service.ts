@@ -40,15 +40,13 @@ export class EventRegService {
       user: userId,
       event: eventId,
     })
+    if (eventToRegister.organizer.toString() == userId) {
+      throw new BadRequestException('You cannot register for your own event.');
+    }
     if (isAlreadyReg.length > 0) {
       throw new BadRequestException('You are already registered for this event.');
     }
 
-    
-
-    if (eventToRegister.organizer.toString() === userId) {
-      throw new BadRequestException('You cannot register for your own event.');
-    }
     const registration = new this.eventRegistrationModel({
       ...regUserOnEventInput,
       user: userId,
