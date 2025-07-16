@@ -1,5 +1,5 @@
-import { Field, InputType } from '@nestjs/graphql';
-import { IsDate, IsDateString, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { Field,  InputType } from '@nestjs/graphql';
+import { IsDate, IsDateString, IsNotEmpty, IsOptional, IsString, IsUUID } from 'class-validator';
 
 @InputType()
 export class EventInput {
@@ -10,6 +10,7 @@ export class EventInput {
 
   @Field(() => String)
   @IsString()
+  @IsUUID(4)
   uuid?: string;
 
   @IsString()
@@ -47,10 +48,9 @@ export class CreateEventInput {
 @InputType()
 export class SearchEventsInput {
   @Field(() => String, { nullable: true })
-  @IsString()
+  @IsUUID(4)
   @IsOptional()
   uuid?: string;
-
 
   @Field(() => String, { nullable: true })
   @IsString()
@@ -75,8 +75,7 @@ export class SearchEventsInput {
   date?: string;
 
 
-  @Field(() => String, { nullable: true })
-  @IsString()
+  @Field(() => String, {nullable: true})
   @IsOptional()
   organizer?: string;
 }

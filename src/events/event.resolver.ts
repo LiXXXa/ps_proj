@@ -20,8 +20,8 @@ export class EventResolver {
   ) {}
 
   @Query(() => Event, {name: 'getEvent'})
-  async event(@Args('uuid', { type: () => String }) _id: string ) {
-    return this.eventService.event({  _id });
+  async event(@Args('uuid', { type: () => String }) uuid: string ) {
+    return this.eventService.event({  uuid });
   }
 
   @Query(() => [Event], {name: 'getEvents'})
@@ -33,8 +33,8 @@ export class EventResolver {
   @Mutation(() => Event, { name: 'createEvent'})
   @UseGuards(JwtAuthGuard)
   async createEvent(@Args('payload', { type: () => CreateEventInput }
-  ) payload: CreateEventInput, @CurrentUser() currentUser: {_id: string}) {
-    return this.eventService.createEvent(payload, currentUser._id);
+  ) payload: CreateEventInput, @CurrentUser() currentUser: {_id: string, uuid: string}) {
+    return this.eventService.createEvent(payload, currentUser.uuid);
   }
 
 

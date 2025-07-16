@@ -1,5 +1,5 @@
 import { Field, InputType } from '@nestjs/graphql';
-import { IsDateString, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { IsDateString, IsNotEmpty, IsOptional, IsString, IsUUID } from 'class-validator';
 
 export enum RegistrationStatus {
   PENDING = 'pending',
@@ -12,12 +12,15 @@ export enum RegistrationStatus {
 export class RegUserOnEventInput {
   @Field(() => String, {nullable: true})
   @IsOptional()
-  user: string;
+  @IsUUID(4)
+  userUuid: string;
 
   @Field(() => String, {nullable: true})
-  @IsString()
-  @IsNotEmpty()
-  event: string;
+  @IsOptional()
+  @IsUUID(4)
+  eventUuid: string;
+
+
 
   @Field(() => String, {nullable: true})
   @IsString()
@@ -58,7 +61,7 @@ export class RegUserOnEventInput {
 @InputType()
 export class CancelRegInput {
   @Field(() => String)
-  @IsString()
+  @IsUUID(4)
   event: string;
 
   @Field(() => String, {nullable: true})
@@ -68,10 +71,6 @@ export class CancelRegInput {
   @Field(() => String, {nullable: true})
   @IsString()
   cancellationReason?:string;
-
-  @Field(() => String, {nullable: true})
-  @IsString()
-  user: string;
 
 
   @Field(() => String, {nullable: true})
@@ -89,11 +88,13 @@ export class CancelRegInput {
 export class GetMyRegInput {
   @IsString()
   @Field(() => String)
+  @IsUUID(4)
   @IsOptional()
   user: string;
 
   @Field(() => String, {nullable: true})
   @IsString()
+  @IsUUID(4)
   @IsOptional()
   event?: string;
 

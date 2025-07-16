@@ -13,7 +13,6 @@ input CancelRegInput {
   event: String!
   notes: String
   status: String
-  user: String
 }
 
 input CreateEventInput {
@@ -38,7 +37,9 @@ type Event {
   description: String
   organizer: User!
   title: String
-  uuid: String
+
+  """Unique identifier for the event"""
+  uuid: String!
 }
 
 type EventRegistration {
@@ -51,6 +52,9 @@ type EventRegistration {
   registrationDate: String
   status: String!
   user: String!
+
+  """Unique identifier for the event-reg"""
+  uuid: String!
 }
 
 input LoginUserInput {
@@ -79,12 +83,12 @@ input RegUserOnEventInput {
   attendanceDate: DateTime
   cancellationDate: String
   cancellationReason: String
-  event: String
+  eventUuid: String
   isAttended: Boolean
   notes: String
   registrationDate: DateTime
   status: String
-  user: String
+  userUuid: String
 }
 
 input SearchEventsInput {

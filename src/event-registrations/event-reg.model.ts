@@ -3,6 +3,7 @@ import { Document, Schema as MongooseSchema } from 'mongoose';
 import { User } from '../users/user.model';
 import { Event } from '../events/event.model';
 import { Field, ObjectType } from '@nestjs/graphql';
+import { v4 as uuidv4 } from 'uuid';
 
 export enum RegistrationStatus {
   PENDING = 'pending',
@@ -15,11 +16,20 @@ export enum RegistrationStatus {
 @Schema({ collection: 'eventRegistrations', timestamps: true })
 export class EventRegistration extends Document {
   @Field(() => String)
-  @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'User', nullable: true })
+  @Prop({ type: MongooseSchema.Types.UUID, ref: 'User', nullable: true })
   user?: User;
 
+  @Field(() => String, { description: 'Unique identifier for the event-reg' })
+  @Prop({
+    type: String,
+    unique: true,
+    default: () => uuidv4(),
+    required: true,
+  })
+  uuid: string;
+
   @Field(() => String)
-  @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'Event', nullable: true })
+  @Prop({ type: MongooseSchema.Types.UUID, ref: 'Event', nullable: true })
   event: Event;
 
   @Field(() => String)
