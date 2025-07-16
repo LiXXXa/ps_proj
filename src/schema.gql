@@ -1,0 +1,103 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type AuthToken {
+  accessToken: String!
+  refreshToken: String!
+}
+
+input CancelRegInput {
+  cancellationDate: String
+  cancellationReason: String
+  event: String!
+  notes: String
+  status: String
+  user: String
+}
+
+input CreateEventInput {
+  date: DateTime!
+  description: String!
+  title: String!
+}
+
+input CreateUserInput {
+  email: String!
+  name: String!
+  password: String!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Event {
+  date: DateTime
+  description: String
+  organizer: User!
+  title: String
+  uuid: String
+}
+
+type EventRegistration {
+  attendanceDate: String
+  cancellationDate: String
+  cancellationReason: String
+  event: String!
+  isAttended: Boolean
+  notes: String
+  registrationDate: String
+  status: String!
+  user: String!
+}
+
+input LoginUserInput {
+  email: String!
+  password: String!
+}
+
+type Mutation {
+  cancelRegistration(payload: CancelRegInput!): EventRegistration!
+  createEvent(payload: CreateEventInput!): Event!
+  registerForEvent(payload: RegUserOnEventInput!): EventRegistration!
+  signIn(payload: LoginUserInput!): AuthToken!
+  signUp(payload: CreateUserInput!): User!
+}
+
+type Query {
+  getEvent(uuid: String!): Event!
+  getEvents(payload: SearchEventsInput): [Event!]!
+  me: User!
+  myOrganizedEvents: [Event!]!
+  myRegisteredEvents: [Event!]!
+}
+
+input RegUserOnEventInput {
+  attendanceDate: DateTime
+  cancellationDate: String
+  cancellationReason: String
+  event: String
+  isAttended: Boolean
+  notes: String
+  registrationDate: DateTime
+  status: String
+  user: String
+}
+
+input SearchEventsInput {
+  _id: String
+  date: DateTime
+  description: String
+  organizer: String
+  title: String
+  uuid: String
+}
+
+type User {
+  email: String
+  name: String
+  password: String
+  uuid: String
+}
