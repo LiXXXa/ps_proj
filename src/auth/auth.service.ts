@@ -11,6 +11,8 @@ import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import * as bcrypt from 'bcrypt';
 import { UserDocument } from '../users/user.model';
+import * as crypto from 'crypto';
+
 
 export type Tokens = {
   accessToken: string;
@@ -33,18 +35,13 @@ export class AuthService {
   async refreshTokens(uuid: string, refreshToken: string): Promise<Tokens> {
 
     const user = await this.usersService.findOne({ uuid }, '+refreshToken');
-
     if (!user || !user.refreshToken) {
-      throw new ForbiddenException('Доступ запрещен');
+      throw new ForbiddenException('Access denied');
     }
 
-    const refreshTokenMatches = await bcrypt.compare(
-      refreshToken,
-      user.refreshToken,
-    );
-
+    const refreshTokenMatches: boolean = refreshToken === user.refreshToken
     if (!refreshTokenMatches) {
-      throw new ForbiddenException('Доступ запрещен');
+      throw new ForbiddenException('Access denied');
     }
 
     const tokens = await this.getTokens(user);
@@ -63,7 +60,7 @@ export class AuthService {
         expiresIn: '15m',
       }),
       this.jwtService.signAsync(payload, {
-        secret: this.configService.get<string>('JWT_REFRESH_SECRET'),
+        secret: this.configService.get<string>('JWT_REFRESH_TKN'),
         expiresIn: '2d',
       }),
     ]);
@@ -95,7 +92,7 @@ export class AuthService {
     const tokens = await this.getTokens(user);
     await this.usersService.updateRefreshToken(user.uuid, tokens.refreshToken);
 
-    const payload = { sub: user._id, email: user.email, uuid: user.uuid };
+    const payload = { sub: user._id, email: user.email, uuid: user.uuid, refreshToken: tokens.refreshToken };
 
     return tokens;
   }

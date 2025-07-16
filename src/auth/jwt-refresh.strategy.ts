@@ -31,6 +31,7 @@ export class JwtRefreshStrategy extends PassportStrategy(Strategy, 'jwt-refresh'
     if (!refreshToken) {
       throw new UnauthorizedException('Некорректный refresh токен');
     }
+
     return { ...payload, refreshToken };
   }
 }
