@@ -7,7 +7,7 @@ import { CreateEventInput, EventInput, SearchEventsInput } from './event.inputs'
 import { UserService } from '../users/user.service';
 import { EventRegService } from '../event-registrations/event-reg.service';
 import { UseGuards } from '@nestjs/common';
-import { JwtAuthGuard } from '../auth/guards/jwt-auth.quard';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { CurrentUser } from '../auth/decorators/currentuser.decorator';
 import { RegUserOnEventInput } from '../event-registrations/event-reg.inputs';
 

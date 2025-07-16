@@ -2,7 +2,7 @@ import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { Event } from '../events/event.model';
 import { EventRegistration } from './event-reg.model';
 import { UseGuards } from '@nestjs/common';
-import { JwtAuthGuard } from '../auth/guards/jwt-auth.quard';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { CancelRegInput, RegUserOnEventInput } from './event-reg.inputs';
 import { EventInput } from '../events/event.inputs';
 import { EventRegService } from './event-reg.service';

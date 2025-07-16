@@ -1,6 +1,6 @@
 import {
   BadRequestException,
-  ConflictException,
+  ConflictException, ForbiddenException,
   Injectable,
   Logger,
   UnauthorizedException,
@@ -29,6 +29,30 @@ export class AuthService {
     private jwtService: JwtService,
     private configService: ConfigService,
   ) {}
+
+  async refreshTokens(uuid: string, refreshToken: string): Promise<Tokens> {
+
+    const user = await this.usersService.findOne({ uuid }, '+refreshToken');
+
+    if (!user || !user.refreshToken) {
+      throw new ForbiddenException('Доступ запрещен');
+    }
+
+    const refreshTokenMatches = await bcrypt.compare(
+      refreshToken,
+      user.refreshToken,
+    );
+
+    if (!refreshTokenMatches) {
+      throw new ForbiddenException('Доступ запрещен');
+    }
+
+    const tokens = await this.getTokens(user);
+
+    await this.usersService.updateRefreshToken(user.uuid, tokens.refreshToken);
+
+    return tokens;
+  }
 
   private async getTokens(user: UserDocument): Promise<Tokens> {
     const payload = { sub: user._id, uuid: user.uuid, email: user.email };

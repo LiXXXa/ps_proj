@@ -6,11 +6,12 @@ import { UserModule } from '../users/user.module';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { PassportModule } from '@nestjs/passport';
-import { JwtAuthGuard } from './guards/jwt-auth.quard';
+import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { JwtStrategy } from './jwt.strategy';
+import { JwtRefreshStrategy } from './jwt-refresh.strategy';
 
 @Module({
-  providers: [AuthResolver, AuthService, JwtStrategy, JwtAuthGuard],
+  providers: [AuthResolver, AuthService, JwtStrategy, JwtAuthGuard, JwtRefreshStrategy],
   imports: [
     UserModule,
     PassportModule.register({ defaultStrategy: 'jwt' }),

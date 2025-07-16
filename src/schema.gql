@@ -61,6 +61,7 @@ input LoginUserInput {
 type Mutation {
   cancelRegistration(payload: CancelRegInput!): EventRegistration!
   createEvent(payload: CreateEventInput!): Event!
+  refreshTokens: AuthToken!
   registerForEvent(payload: RegUserOnEventInput!): EventRegistration!
   signIn(payload: LoginUserInput!): AuthToken!
   signUp(payload: CreateUserInput!): User!

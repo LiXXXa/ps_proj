@@ -2,6 +2,10 @@ import { Args, Field, Mutation, ObjectType, Resolver } from '@nestjs/graphql';
 import { AuthService } from './auth.service';
 import { User } from '../users/user.model';
 import { CreateUserInput, LoginUserInput } from '../users/user.inputs';
+import { UseGuards } from '@nestjs/common';
+import { JwtRefreshGuard } from './guards/jwt-refresh.guard';
+import { CurrentUser } from './decorators/currentuser.decorator';
+
 
 @ObjectType()
 class AuthToken {
@@ -35,5 +39,11 @@ export class AuthResolver {
       email: payload.email,
       password: payload.password,
     });
+  }
+
+  @Mutation(() => AuthToken, { name: 'refreshTokens' })
+  @UseGuards(JwtRefreshGuard)
+  refreshTokens(@CurrentUser() user: { uuid: string; refreshToken: string }) {
+    return this.authService.refreshTokens(user.uuid, user.refreshToken);
   }
 }
