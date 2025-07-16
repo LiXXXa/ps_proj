@@ -17,8 +17,8 @@ export class UserService {
     return createdUser.save();
   }
 
-  async findOne(param: UserInput) {
-    return await this.userModel.findOne(param, 'uuid name email').exec();
+  async findOne(param: UserInput, select?: string) {
+    return await this.userModel.findOne(param, select).exec();
   }
 
   async updateRefreshToken(uuid: string, refreshToken: string) {
