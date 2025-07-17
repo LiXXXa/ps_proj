@@ -10,7 +10,7 @@ import { Model } from 'mongoose';
 import { EventRegistration, RegistrationStatus } from './event-reg.model';
 import { CancelRegInput, RegUserOnEventInput, GetMyRegInput } from './event-reg.inputs';
 import { Event, EventDocument } from '../events/event.model';
-import { User } from '../users/user.model';
+import { User, UserDocument } from '../users/user.model';
 
 
 @Injectable()
@@ -20,14 +20,13 @@ export class EventRegService {
 
   constructor(
     @InjectModel(EventRegistration.name) private eventRegistrationModel: Model<EventRegistration>,
-    @InjectModel(Event.name) private eventModel: Model<EventDocument>,
+    @InjectModel(Event.name) private eventModel: Model<EventDocument>
   ) {}
 
-  async register(regUserOnEventInput: RegUserOnEventInput, userId: string) {
-    const { event: eventId } = regUserOnEventInput;
+  async register(regUserOnEventInput: RegUserOnEventInput, userUuid: string) {
+    const { eventUuid } = regUserOnEventInput;
 
-    const eventToRegister = await this.eventModel.findById(eventId).exec();
-
+    const eventToRegister = await this.eventModel.findOne({ uuid: eventUuid }).exec();
     if (!eventToRegister) {
       throw new BadRequestException('Event not found.');
     }
@@ -36,35 +35,36 @@ export class EventRegService {
         'Registration for past events is not possible.',
       );
     }
-    const isAlreadyReg = await this.eventRegistrationModel.find({
-      user: userId,
-      event: eventId,
+    const isAlreadyReg = await this.eventRegistrationModel.findOne({
+      user: userUuid,
+      event: eventUuid,
     })
-    if (eventToRegister.organizer.toString() == userId) {
+    console.log('isAlreadyReg', isAlreadyReg);
+    if (eventToRegister.organizer.toString() === userUuid) {
       throw new BadRequestException('You cannot register for your own event.');
     }
-    if (isAlreadyReg.length > 0) {
+    if (isAlreadyReg) {
       throw new BadRequestException('You are already registered for this event.');
     }
 
     const registration = new this.eventRegistrationModel({
       ...regUserOnEventInput,
-      user: userId,
+      event: eventUuid,
+      user: userUuid,
       registrationDate: new Date().toISOString(),
     });
     const savedRegistration = await registration.save();
 
-    this.logger.log(`You successfully registered for event ${eventId}. Registration ID: ${savedRegistration._id}`);
-
+    this.logger.log(`You successfully registered for event ${eventUuid}. Registration ID: ${savedRegistration.uuid}`);
     return savedRegistration;
   }
 
-  async cancelRegistration(cancelRegInput: CancelRegInput, userId: string) {
-    const { event: eventId, cancellationReason } = cancelRegInput;
+  async cancelRegistration(cancelRegInput: CancelRegInput, userUuid: string) {
+    const {event, cancellationReason } = cancelRegInput;
     const updatedRegistration = await this.eventRegistrationModel.findOneAndUpdate(
       {
-        user: userId,
-        event: eventId,
+        user: userUuid,
+        event: event,
       },
       {
         $set: {
@@ -82,7 +82,7 @@ export class EventRegService {
     if (!updatedRegistration) {
       throw new NotFoundException('Registration for this event not found.');
     }
-    this.logger.log(`Registration for event ${eventId} was cancelled.`);
+    this.logger.log(`Registration for event ${event} was cancelled.`);
 
     return updatedRegistration;
   }

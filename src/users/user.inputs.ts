@@ -46,6 +46,7 @@ export class UserInput {
 
   @Field(() => String)
   @IsString()
+  @IsUUID(4)
   uuid?: string;
 
   @Field(() => String)

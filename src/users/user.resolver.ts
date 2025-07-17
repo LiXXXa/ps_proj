@@ -8,7 +8,6 @@ import { CurrentUser } from '../auth/decorators/currentuser.decorator';
 import { Event } from '../events/event.model';
 import { EventService } from '../events/event.service';
 import { EventRegService } from '../event-registrations/event-reg.service';
-import { EventRegistration } from '../event-registrations/event-reg.model';
 
 
 
@@ -29,19 +28,19 @@ export class UserResolver {
   @Query(() => [Event], { name: 'myOrganizedEvents' })
   @UseGuards(JwtAuthGuard)
   async myOrganizedEvents(
-    @CurrentUser() currentUser: {_id: string}
+    @CurrentUser() currentUser: {_id: string, uuid: string}
   ) {
     return this.eventService.events({
-    organizer:currentUser._id });
+      organizer: currentUser.uuid });
   }
 
   @Query(() => [Event], { name: 'myRegisteredEvents' })
   @UseGuards(JwtAuthGuard)
   async myRegisteredEvents(
-    @CurrentUser() currentUser: {_id: string}
+    @CurrentUser() currentUser: {_id: string, uuid: string}
   ) {
     const registrations = await this.eventRegService.getMyRegEvents({
-      user: currentUser._id
+      user: currentUser.uuid
     });
 
     const events = registrations.map(reg => reg.event);

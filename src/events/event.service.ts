@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { Event, EventDocument } from './event.model';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { CreateEventInput, EventInput, SearchEventsInput } from './event.inputs';
+import { CreateEventInput, SearchEventsInput } from './event.inputs';
 import { v4 as uuidv4 } from 'uuid';
 import { User } from '../users/user.model';
 
@@ -12,16 +12,16 @@ export class EventService {
     @InjectModel(Event.name) private eventModel: Model<EventDocument>,
   ) {}
 
-  async createEvent(param: CreateEventInput, organizerId: string) {
+  async createEvent(param: CreateEventInput, organizerUuid: string) {
     const newUuid = uuidv4();
     const createdEvent = new this.eventModel({
       ...param,
-      organizer: organizerId,
-      uuid: newUuid
+      organizer: organizerUuid,
+      uuid: newUuid,
     });
+    console.log('createdEvent', createdEvent);
 
-    const savedEvent = await createdEvent.save();
-    return await savedEvent.populate<{ organizer: User }>({ path:'organizer', select: 'name email uuid' });
+    return await createdEvent.save();
   }
 
   async event(param: SearchEventsInput) {
@@ -37,7 +37,12 @@ export class EventService {
       ...(params || {}),
       date: { $gte: new Date() },
     };
-    const events =  await this.eventModel.find(findQuery).populate<{ organizer: User }>({ path:'organizer', select: 'name email uuid' }).exec();
+    const events = await this.eventModel
+      .find(findQuery)
+      .populate<{
+        organizer: User;
+      }>({ path: 'organizer', select: 'name email uuid' })
+      .exec();
     if (!events) {
       throw new NotFoundException('Events not found.');
     }

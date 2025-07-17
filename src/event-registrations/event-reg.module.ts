@@ -6,12 +6,15 @@ import { EventRegService } from './event-reg.service';
 import { EventModule } from '../events/event.module';
 import { UserModule } from '../users/user.module';
 import { EventRegResolver } from './event-reg.resolver';
+import { User, UserSchema } from '../users/user.model';
 
 @Module({
   imports: [
     MongooseModule.forFeature([
       { name: EventRegistration.name, schema: eventRegistrationSchema },
-      {name: Event.name, schema: EventSchema}
+      {name: Event.name, schema: EventSchema},
+      {name: User.name, schema: UserSchema},
+
     ]),
     forwardRef(() => EventModule),
     forwardRef(() => UserModule),
