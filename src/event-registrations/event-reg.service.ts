@@ -73,8 +73,11 @@ export class EventRegService {
           cancellationReason: cancellationReason,
         },
       },
-      { new: true }
-    ).exec();
+      { new: true },
+    ).populate([
+      { path: 'user', select: 'name email uuid' },
+      { path: 'event', populate: { path: 'organizer', select: 'name email uuid' } },
+    ]).exec();
 
     if (!updatedRegistration) {
       throw new NotFoundException('Registration for this event not found.');
@@ -85,6 +88,11 @@ export class EventRegService {
   }
 
   async getMyRegEvents(getMyRegInput: GetMyRegInput) {
+
+    const query = {
+      ...getMyRegInput,
+      status: RegistrationStatus.CONFIRMED,
+    }
     return this.eventRegistrationModel.find(getMyRegInput)
       .populate({
         path: 'event',

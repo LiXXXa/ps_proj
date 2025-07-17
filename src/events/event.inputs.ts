@@ -8,10 +8,6 @@ export class EventInput {
   @IsString()
   _id: string;
 
-  @Field(() => String)
-  @IsString()
-  uuid?: string;
-
   @IsString()
   @Field(() => String)
   title?: string;
@@ -46,11 +42,6 @@ export class CreateEventInput {
 
 @InputType()
 export class SearchEventsInput {
-  @Field(() => String, { nullable: true })
-  @IsString()
-  @IsOptional()
-  uuid?: string;
-
 
   @Field(() => String, { nullable: true })
   @IsString()

@@ -20,14 +20,13 @@ export class EventResolver {
   ) {}
 
   @Query(() => Event, {name: 'getEvent'})
-  async event(@Args('uuid', { type: () => String }) _id: string ) {
+  async event(@Args('_id', { type: () => String }) _id: string ) {
     return this.eventService.event({  _id });
   }
 
   @Query(() => [Event], {name: 'getEvents'})
-  async events(@Args('payload', { type: () => SearchEventsInput, nullable: true })
-                 payload?: SearchEventsInput ) {
-    return this.eventService.events(payload);
+  async events( ) {
+    return this.eventService.events();
   }
 
   @Mutation(() => Event, { name: 'createEvent'})

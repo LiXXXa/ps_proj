@@ -12,7 +12,7 @@ export enum RegistrationStatus {
 export class RegUserOnEventInput {
   @Field(() => String, {nullable: true})
   @IsOptional()
-  user: string;
+  user?: string;
 
   @Field(() => String, {nullable: true})
   @IsString()
@@ -71,7 +71,8 @@ export class CancelRegInput {
 
   @Field(() => String, {nullable: true})
   @IsString()
-  user: string;
+  @IsOptional()
+  user?: string;
 
 
   @Field(() => String, {nullable: true})

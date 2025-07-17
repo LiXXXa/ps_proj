@@ -34,6 +34,7 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 scalar DateTime
 
 type Event {
+  _id: ID!
   date: DateTime
   description: String
   organizer: User!
@@ -42,15 +43,17 @@ type Event {
 }
 
 type EventRegistration {
+  _id: ID!
   attendanceDate: String
   cancellationDate: String
   cancellationReason: String
-  event: String!
+  event: Event
   isAttended: Boolean
   notes: String
   registrationDate: String
   status: String!
-  user: String!
+  user: User
+  uuid: String
 }
 
 input LoginUserInput {
@@ -68,8 +71,8 @@ type Mutation {
 }
 
 type Query {
-  getEvent(uuid: String!): Event!
-  getEvents(payload: SearchEventsInput): [Event!]!
+  getEvent(_id: String!): Event!
+  getEvents: [Event!]!
   me: User!
   myOrganizedEvents: [Event!]!
   myRegisteredEvents: [Event!]!
@@ -85,15 +88,6 @@ input RegUserOnEventInput {
   registrationDate: DateTime
   status: String
   user: String
-}
-
-input SearchEventsInput {
-  _id: String
-  date: DateTime
-  description: String
-  organizer: String
-  title: String
-  uuid: String
 }
 
 type User {
