@@ -21,8 +21,8 @@ export class UserResolver {
 
   @Query(() => User, {name: 'me'})
   @UseGuards(JwtAuthGuard)
-  async me(@CurrentUser()  currentUser: {sub: string, email: string, uuid: string}) {
-    return this.userService.findOne({uuid: currentUser.uuid}, 'uuid name email');
+  async me(@CurrentUser()  currentUser: {_id: string, email: string, uuid: string}) {
+    return this.userService.findOne({_id: currentUser._id}, 'uuid name email');
   }
 
   @Query(() => [Event], { name: 'myOrganizedEvents' })
@@ -31,7 +31,7 @@ export class UserResolver {
     @CurrentUser() currentUser: {_id: string, uuid: string}
   ) {
     return this.eventService.events({
-      organizer: currentUser.uuid });
+      organizer: currentUser._id });
   }
 
   @Query(() => [Event], { name: 'myRegisteredEvents' })
@@ -40,7 +40,7 @@ export class UserResolver {
     @CurrentUser() currentUser: {_id: string, uuid: string}
   ) {
     const registrations = await this.eventRegService.getMyRegEvents({
-      user: currentUser.uuid
+      user: currentUser._id
     });
 
     const events = registrations.map(reg => reg.event);

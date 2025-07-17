@@ -24,9 +24,9 @@ export class EventRegService {
   ) {}
 
   async register(regUserOnEventInput: RegUserOnEventInput, userUuid: string) {
-    const { eventUuid } = regUserOnEventInput;
-
-    const eventToRegister = await this.eventModel.findOne({ uuid: eventUuid }).exec();
+    const { event } = regUserOnEventInput;
+    console.log('regUserOnEventInput', regUserOnEventInput);
+    const eventToRegister = await this.eventModel.findOne({ _id: event }).exec();
     if (!eventToRegister) {
       throw new BadRequestException('Event not found.');
     }
@@ -37,7 +37,7 @@ export class EventRegService {
     }
     const isAlreadyReg = await this.eventRegistrationModel.findOne({
       user: userUuid,
-      event: eventUuid,
+      event: event,
     })
     console.log('isAlreadyReg', isAlreadyReg);
     if (eventToRegister.organizer.toString() === userUuid) {
@@ -49,13 +49,13 @@ export class EventRegService {
 
     const registration = new this.eventRegistrationModel({
       ...regUserOnEventInput,
-      event: eventUuid,
+      event: event,
       user: userUuid,
       registrationDate: new Date().toISOString(),
     });
     const savedRegistration = await registration.save();
 
-    this.logger.log(`You successfully registered for event ${eventUuid}. Registration ID: ${savedRegistration.uuid}`);
+    this.logger.log(`You successfully registered for event ${event}. Registration ID: ${savedRegistration.uuid}`);
     return savedRegistration;
   }
 

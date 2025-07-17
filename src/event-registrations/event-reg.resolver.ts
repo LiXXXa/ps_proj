@@ -21,7 +21,7 @@ export class EventRegResolver {
     @Args('payload', { type: () => RegUserOnEventInput }) payload: RegUserOnEventInput,
     @CurrentUser() currentUser: {_id: string, uuid: string}
   ) {
-    return this.eventRegService.register(payload, currentUser.uuid);
+    return this.eventRegService.register(payload, currentUser._id);
   }
 
   @Mutation(() => EventRegistration, { name: 'cancelRegistration' })
@@ -29,6 +29,6 @@ export class EventRegResolver {
   async cancelRegistration(
     @Args('payload', { type: () => CancelRegInput }) payload: CancelRegInput,
     @CurrentUser() currentUser: {_id: string, uuid: string}) {
-    return this.eventRegService.cancelRegistration(payload, currentUser.uuid);
+    return this.eventRegService.cancelRegistration(payload, currentUser._id);
 }
 }
